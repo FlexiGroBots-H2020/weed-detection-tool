@@ -1,0 +1,6 @@
+#folders to be ignored
+**/inputs/
+**/outputs/
+**/.git/
+**/tests/
+**/env/
