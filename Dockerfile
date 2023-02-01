@@ -9,32 +9,20 @@ WORKDIR /wd
 
 RUN pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
 
+RUN pip install 'git+https://github.com/MaureenZOU/detectron2-xyz.git'
+RUN pip install 'git+https://github.com/cocodataset/panopticapi.git'
+
 COPY requirements.txt /wd
 RUN pip install -r requirements.txt
 
-COPY pest_detection.py /wd
-COPY pest_detection_utils.py /wd
-COPY pest_detection_kserve.py /wd
-COPY kserve_backbone_pest.py /wd
-COPY kserve_utils.py /wd
-COPY Detic/ /wd/Detic/
-COPY detectron2/ /wd/detectron2/
-WORKDIR /wd/detectron2
-RUN pip install -e .
+COPY weed_semseg.py /wd
 
-WORKDIR /wd/Detic
-RUN pip install -r requirements.txt
+COPY X_Decoder /wd/X_Decoder
 
-WORKDIR /wd
-
-COPY models_clip/ /wd/models_clip/
-COPY models/ /wd/models/
-COPY datasets /wd/datasets/
 
 RUN chmod -R 777 /wd
 
 USER jovyan
-#RUN mkdir -p /wd/outputs/face_detection_cache/FaceDetector/
 
 
-ENTRYPOINT ["python", "-u", "kserve_backbone_pest.py"]
+ENTRYPOINT ["python", "-u", "weed_semseg.py"]

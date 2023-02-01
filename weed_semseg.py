@@ -116,7 +116,7 @@ def main(args=None):
     # META DATA
     pretrained_pth = os.path.join(opt['WEIGHT'])
     output_root = './output'
-    input_pth = 'input/Captura.png'
+    input_pth = 'inputs/agri_0_614.jpeg'
 
     model = BaseModel(opt, build_model(opt)).from_pretrained(pretrained_pth).eval().cuda()
 
